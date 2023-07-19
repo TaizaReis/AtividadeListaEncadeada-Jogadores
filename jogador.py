@@ -1,29 +1,19 @@
-#Método construtor
-#Classe jogador, com seus atributos e métodos
+#Construa uma lista encadeada de objetor jogador, de forma que os jogadores sejam 
+#adicionados na lista em ordem crescente pelo número da camisa. O objeto jogador deve 
+#conter os atributos nome e número da camisa, além de um atributo fortemente privado 
+#chamado posição. 
+#A classe jogador, deve ter métodos assessores e modificadores para os atributos que 
+#foram necessários.
 class Jogador:
-    def __init__(self, numero_camisa, nome):
+    def __init__(self, numero_camisa, nome, posicao):
         self.numero_camisa = numero_camisa
         self.nome = nome
-        self.__posicao = None
-        self.proximo = None
+        self._posicao = posicao
 
-
-#Métodos para ACESSAR e MODIFICAR 
     def get_posicao(self):
-        return self.__posicao
+        return self._posicao
 
     def set_posicao(self, posicao):
-        self.__posicao = posicao
-
-    def get_nome(self):
-        return self.nome
-
-    def set_nome(self, nome):
-        self.nome = nome
-
-    def get_numero_camisa(self):
-        return self.numero_camisa
-
-    def set_numero_camisa(self, numero_camisa):
-        self.numero_camisa = numero_camisa
+        self._posicao = posicao
         
+

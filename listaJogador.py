@@ -1,45 +1,72 @@
-#Construa uma lista encadeada de objetor jogador, de forma que os jogadores sejam 
-#adicionados na lista em ordem crescente pelo número da camisa. O objeto jogador deve 
-#conter os atributos nome e número da camisa, além de um atributo fortemente privado 
-#chamado posição. 
-#A classe jogador, deve ter métodos assessores e modificadores para os atributos que 
-#foram necessários.
-
 from jogador import Jogador
 
-#Classe listaJogadores
-class ListaJogadores:
+class Jogador:
+    def __init__(self, numero_camisa, nome, posicao):
+        self.numero_camisa = numero_camisa
+        self.nome = nome
+        self._posicao = posicao
+        self.proximo = None
+
+class ListaJogador:
     def __init__(self):
         self.inicio = None
+        self.tamanho = 0
 
-    def adicionar_jogador(self, numero_camisa, nome, posicao):
-        novo_jogador = Jogador(numero_camisa, nome)
-        novo_jogador.set_posicao(posicao)
+    def add_jogador(self, numero_camisa, nome, posicao):
+        novo_jogador = Jogador(numero_camisa, nome, posicao)
 
-        if self.inicio is None:
-            self.inicio = novo_jogador
-        if numero_camisa < self.inicio.get_numero_camisa():
+        if self.inicio is None or numero_camisa < self.inicio.numero_camisa:
             novo_jogador.proximo = self.inicio
             self.inicio = novo_jogador
         else:
-            jogador_atual = self.inicio
+            jogador_anterior = self.inicio
+            jogador_atual = self.inicio.proximo
 
-            #Percorrer a lista enquanto há jogadores a serem impressos
             while (
-                jogador_atual.proximo is not None
-                and jogador_atual.proximo.get_numero_camisa() < numero_camisa):
-
+                jogador_atual is not None
+                and jogador_atual.numero_camisa < numero_camisa
+            ):
+                jogador_anterior = jogador_atual
                 jogador_atual = jogador_atual.proximo
 
-            novo_jogador.proximo = jogador_atual.proximo
-            jogador_atual.proximo = novo_jogador
+            novo_jogador.proximo = jogador_atual
+            jogador_anterior.proximo = novo_jogador
 
-    def imprimir_lista(self):
-        jogador_atual = self.inicio
-        while jogador_atual is not None:
-            print(
-                f"Número da camisa: {jogador_atual.get_numero_camisa()}, Nome: {jogador_atual.get_nome()}, Posição: {jogador_atual.get_posicao()}"
-            )
-            jogador_atual = jogador_atual.proximo
+        self.tamanho += 1
+        self.imprimir()
 
+    def imprimir(self):
+        if self.inicio is None:
+            print("Lista Vazia")
+        else:
+            print("-----------")
+            jogador_atual = self.inicio
+            while jogador_atual is not None:
+                print(f"Número da camisa: {jogador_atual.numero_camisa}, Nome: {jogador_atual.nome}, Posição: {jogador_atual._posicao}")
+                jogador_atual = jogador_atual.proximo
+            print("Total de elementos:", str(self.tamanho))
 
+    def remover_inicio(self):
+        if self.inicio is None:
+            print("Lista Vazia")
+        else:
+            self.inicio = self.inicio.proximo
+            self.tamanho -= 1
+        self.imprimir()
+
+    def remover_fim(self):
+        if self.inicio is None:
+            print("Lista Vazia")
+        elif self.inicio.proximo is None:
+            self.inicio = None
+            self.tamanho = 0
+        else:
+            jogador_anterior = self.inicio
+            jogador_atual = self.inicio.proximo
+            while jogador_atual.proximo is not None:
+                jogador_anterior = jogador_atual
+                jogador_atual = jogador_atual.proximo
+
+            jogador_anterior.proximo = None
+            self.tamanho -= 1
+        self.imprimir()
