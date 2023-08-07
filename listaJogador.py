@@ -1,12 +1,5 @@
 from jogador import Jogador
 
-class Jogador:
-    def __init__(self, numero_camisa, nome, posicao):
-        self.numero_camisa = numero_camisa
-        self.nome = nome
-        self._posicao = posicao
-        self.proximo = None
-
 class ListaJogador:
     def __init__(self):
         self.inicio = None
